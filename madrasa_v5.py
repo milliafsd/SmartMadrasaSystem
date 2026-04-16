@@ -849,7 +849,7 @@ def show_dashboard():
 
 # ---------- ایڈمن ڈیش بورڈ (صرف شماریات) ----------
 if st.session_state.selected_page == "admin_dashboard" and st.session_state.user_type == "admin":
-    st.markdown("<div class='main-header'><h1>📊 ایڈمن ڈیش بورڈ</h1></div>", unsafe_allow_html=True)
+    show_dashboard()   # دوبارہ آئیکن گرڈ دکھائے گا
     conn = get_db_connection()
     total_students = conn.execute("SELECT COUNT(*) FROM students").fetchone()[0]
     total_teachers = conn.execute("SELECT COUNT(*) FROM teachers WHERE name!='admin'").fetchone()[0]
