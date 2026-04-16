@@ -825,7 +825,6 @@ with st.sidebar:
 def show_dashboard():
     st.markdown("<div class='main-header'><h1>🕌 جامعہ ملیہ اسلامیہ</h1><p>اسمارٹ تعلیمی و انتظامی ڈیش بورڈ</p></div>", unsafe_allow_html=True)
     
-    # 4 کالم فی قطار
     cols_per_row = 4
     items = list(menu_items.items())
     for i in range(0, len(items), cols_per_row):
@@ -834,19 +833,15 @@ def show_dashboard():
             if i + j < len(items):
                 label, props = items[i + j]
                 with cols[j]:
-                    # بٹن کو خوبصورت کارڈ کی شکل دینے کے لیے ایک منفرد کلید
+                    # منفرد کلید (key) بنائیں
+                    unique_key = f"dash_btn_{props['page']}_{i}_{j}"
                     if st.button(
                         f"{props['icon']}\n\n{label}",
-                        key=f"btn_{props['page']}",
+                        key=unique_key,
                         use_container_width=True,
                     ):
                         st.session_state.selected_page = props['page']
                         st.rerun()
-
-# ==================== 7. پیج رینڈرنگ ====================
-if st.session_state.selected_page in [None, "admin_dashboard", "daily_entry"]:
-    show_dashboard()
-    st.stop()
 
 # ==================== 8. تمام پیجز کے لیے مواد ====================
 # یہاں پرانے کوڈ کو st.session_state.selected_page کے مطابق ڈھالا گیا ہے۔
