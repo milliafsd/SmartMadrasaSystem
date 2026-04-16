@@ -603,6 +603,29 @@ def generate_timetable_html(df_timetable):
         </div>
     </body>
     </html>
+    /* ڈیش بورڈ بٹنوں کو کارڈ کی شکل دینا */
+div[data-testid="stButton"] button {
+    background: white !important;
+    border-radius: 25px !important;
+    padding: 20px 5px !important;
+    margin: 10px 0 !important;
+    text-align: center !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+    border: 1px solid rgba(46, 125, 50, 0.2) !important;
+    transition: all 0.3s ease !important;
+    color: #1e5631 !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    line-height: 1.5 !important;
+    white-space: pre-line !important;  /* لائن بریک کے لیے */
+}
+
+div[data-testid="stButton"] button:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.15) !important;
+    border-color: #2e7d32 !important;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8) !important;
+}
     """
     return html
 
@@ -811,22 +834,12 @@ def show_dashboard():
             if i + j < len(items):
                 label, props = items[i + j]
                 with cols[j]:
-                    st.markdown(f"""
-                    <div style="
-                        background: white;
-                        border-radius: 25px;
-                        padding: 20px 5px;
-                        margin: 10px 0;
-                        text-align: center;
-                        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-                        border: 1px solid {props['color']}40;
-                        transition: all 0.3s ease;
-                    ">
-                        <div style="font-size: 48px;">{props['icon']}</div>
-                        <div style="font-weight: bold; color: {props['color']}; font-size: 1.1rem;">{label}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    if st.button(label, key=f"menu_{props['page']}", use_container_width=True):
+                    # بٹن کو خوبصورت کارڈ کی شکل دینے کے لیے ایک منفرد کلید
+                    if st.button(
+                        f"{props['icon']}\n\n{label}",
+                        key=f"btn_{props['page']}",
+                        use_container_width=True,
+                    ):
                         st.session_state.selected_page = props['page']
                         st.rerun()
 
